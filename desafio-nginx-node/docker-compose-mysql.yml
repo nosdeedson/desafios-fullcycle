@@ -1,0 +1,36 @@
+version: '3.3'
+networks:
+  mysql_default:
+    driver: bridge
+services:
+  db:
+    container_name: mysql
+    image: mysql      
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: node
+      MYSQL_ROOT_HOST: "mysql"
+    volumes:
+      - ./mysql-data/8.0.23:/var/lib/mysql
+      - ./dump:/docker-entrypoint-initdb.d
+    ports:
+      - 3307:3306
+    expose:
+      - 3307
+    networks:
+      - mysql_default
+  app:
+    container_name: desafio-node
+    image: nosdeedson/desafio-node:latest
+    links:
+      - db
+    networks:
+      - mysql_default
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+    expose:
+      - 8080
