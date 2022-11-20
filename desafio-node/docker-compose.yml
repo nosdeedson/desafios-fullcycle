@@ -1,0 +1,68 @@
+version: '3.9'
+networks:
+    mysql_node:
+        driver: bridge
+# services:
+#   mysql:
+#     image: mysql:8
+#     container_name: mysql
+#     networks:
+#       - mysql_node
+#     ports:
+#       - 3306:3306
+#     volumes:
+#       - ./db_data/mysql:/var/lib/mysql
+#     environment:
+#       - MYSQL_ROOT_PASSWORD=root
+#       - MYSQL_PASSWORD=root
+#       - MYSQL_DATABASE=node
+#   app:
+#     container_name: desafio-node
+#     image: nosdeedson/desafio-node:latest
+#     environment:
+#       - MYSQL_DATABASE=node
+#       - MYSQL_USER=root
+#       - MYSQL_PASSWORD=root
+#       - MYSQL_HOST=mysql
+#     links:
+#       - mysql
+#     networks:
+#       - mysql_node
+#     ports:
+#       - 8080:80
+#     depends_on:
+#       - mysql
+#     expose:
+#       - 8080
+# volumes:
+#     db_data:
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    # networks:
+    #   - mysql_node
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db_data/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=node
+  app:
+    depends_on:
+      - mysql
+    container_name: desafio-node
+    build: .
+    links:
+      - mysql
+    # networks:
+    #   - mysql_node
+    ports:
+      - 8080:80
+    expose:
+      - 8080
+volumes:
+    db_data:
