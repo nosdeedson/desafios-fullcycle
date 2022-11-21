@@ -41,6 +41,12 @@ services:
   mysql:
     image: mysql:8
     container_name: mysql
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
     # networks:
     #   - mysql_node
     ports:
@@ -53,8 +59,10 @@ services:
       - MYSQL_DATABASE=node
   app:
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     container_name: desafio-node
+    restart: always
     build: .
     links:
       - mysql
