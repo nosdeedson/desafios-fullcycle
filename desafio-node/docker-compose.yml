@@ -1,54 +1,19 @@
 version: '3.9'
 networks:
-    mysql_node:
+    desafio-node:
         driver: bridge
-# services:
-#   mysql:
-#     image: mysql:8
-#     container_name: mysql
-#     networks:
-#       - mysql_node
-#     ports:
-#       - 3306:3306
-#     volumes:
-#       - ./db_data/mysql:/var/lib/mysql
-#     environment:
-#       - MYSQL_ROOT_PASSWORD=root
-#       - MYSQL_PASSWORD=root
-#       - MYSQL_DATABASE=node
-#   app:
-#     container_name: desafio-node
-#     image: nosdeedson/desafio-node:latest
-#     environment:
-#       - MYSQL_DATABASE=node
-#       - MYSQL_USER=root
-#       - MYSQL_PASSWORD=root
-#       - MYSQL_HOST=mysql
-#     links:
-#       - mysql
-#     networks:
-#       - mysql_node
-#     ports:
-#       - 8080:80
-#     depends_on:
-#       - mysql
-#     expose:
-#       - 8080
-# volumes:
-#     db_data:
-
 services:
   mysql:
     image: mysql:8
     container_name: mysql
-    # healthcheck:
-    #   test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
-    #   interval: 30s
-    #   timeout: 30s
-    #   retries: 5
-    #   start_period: 30s
-    # networks:
-    #   - mysql_node
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    networks:
+      - desafio-node
     ports:
       - 3306:3306
     expose:
@@ -59,20 +24,33 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_PASSWORD=root
       - MYSQL_DATABASE=node
-  # app:
-  #   depends_on:
-  #     mysql:
-  #       condition: service_healthy
-  #   container_name: desafio-node
-  #   restart: always
-  #   build: .
-  #   links:
-  #     - mysql
-  #   # networks:
-  #   #   - mysql_node
-  #   ports:
-  #     - 8080:80
-  #   expose:
-  #     - 8080
+  app:
+    depends_on:
+      mysql:
+        condition: service_healthy
+    container_name: desafio-node
+    restart: always
+    build:  
+      context: ./node/app
+      dockerfile: Dockerfile
+    links:
+      - mysql
+    networks:
+      - desafio-node
+    ports:
+      - 3000:3000
+  proxy:
+    depends_on:
+      - app
+    container_name: mynginx
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile.prod
+    networks:
+      - desafio-node
+    ports:
+      - 8080:80
+    expose:
+      - 8080
 volumes:
     db_data:
