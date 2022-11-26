@@ -1,9 +1,8 @@
 const express = require("express");
 const routes= require("./routes.js");
-require('dotenv').config()
-const People = require('../db/people.js');
-
-const db= require('../db/db.js')
+// require('dotenv').config()
+const People = require('../db/people')
+const db = require('../db/db')
 
 const port = 3000;
 
@@ -22,4 +21,3 @@ app.listen(port, async () => {
   }
   console.log("Servidor iniciado na porta 3000")
 });
-

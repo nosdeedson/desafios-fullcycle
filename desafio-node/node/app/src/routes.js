@@ -1,8 +1,7 @@
 const express = require('express');
-
 const routes = express.Router();
-const db= require('../db/db.js')
-const People = require('../db/people.js')
+const db = require('../db/db')
+const People = require('../db/people')
 
 routes.get("/", async (req, res) => {
   let pessoas;

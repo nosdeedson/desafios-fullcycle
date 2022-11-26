@@ -41,36 +41,38 @@ services:
   mysql:
     image: mysql:8
     container_name: mysql
-    healthcheck:
-      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
-      interval: 30s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
+    # healthcheck:
+    #   test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+    #   interval: 30s
+    #   timeout: 30s
+    #   retries: 5
+    #   start_period: 30s
     # networks:
     #   - mysql_node
     ports:
       - 3306:3306
+    expose:
+      - 3306
     volumes:
       - ./db_data/mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_PASSWORD=root
       - MYSQL_DATABASE=node
-  app:
-    depends_on:
-      mysql:
-        condition: service_healthy
-    container_name: desafio-node
-    restart: always
-    build: .
-    links:
-      - mysql
-    # networks:
-    #   - mysql_node
-    ports:
-      - 8080:80
-    expose:
-      - 8080
+  # app:
+  #   depends_on:
+  #     mysql:
+  #       condition: service_healthy
+  #   container_name: desafio-node
+  #   restart: always
+  #   build: .
+  #   links:
+  #     - mysql
+  #   # networks:
+  #   #   - mysql_node
+  #   ports:
+  #     - 8080:80
+  #   expose:
+  #     - 8080
 volumes:
     db_data:
