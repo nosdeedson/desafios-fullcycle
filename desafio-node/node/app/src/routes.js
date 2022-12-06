@@ -9,7 +9,7 @@ routes.get("/", async (req, res) => {
   await db.sync();
   await People.create({
     nome: "edson jose"
-  }).then(() => console.log('criou'))
+  }).then(() => console.log('criou table'))
   await db.query('select count(nome) as pessoas from people')
     .then(async (result) => {
       pessoas = result[0][0].pessoas;

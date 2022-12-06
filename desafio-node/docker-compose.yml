@@ -4,14 +4,14 @@ networks:
         driver: bridge
 services:
   mysql:
-    image: mysql:8
+    image: mysql:5.7
     container_name: mysql
-    healthcheck:
-      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
-      interval: 30s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
+    # healthcheck:
+    #   test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+    #   interval: 30s
+    #   timeout: 30s
+    #   retries: 5
+    #   start_period: 30s
     networks:
       - desafio-node
     ports:
@@ -26,10 +26,11 @@ services:
       - MYSQL_DATABASE=node
   app:
     depends_on:
-      mysql:
-        condition: service_healthy
+      - mysql
+        # condition: service_healthy
     container_name: desafio-node
     restart: always
+    # entrypoint: dockerize -wait tcp://mysql:3306 docker-entrypoint.sh
     build:  
       context: ./node/app
       dockerfile: Dockerfile
@@ -37,8 +38,8 @@ services:
       - mysql
     networks:
       - desafio-node
-    ports:
-      - 3000:3000
+    # ports:
+    #   - 3000:3000
   proxy:
     depends_on:
       - app
