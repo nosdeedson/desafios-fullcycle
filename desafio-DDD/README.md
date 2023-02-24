@@ -26,3 +26,8 @@
 
 ## comando para rodar os tests: npm test
 ## ou adicionar o plugin (extension) Jest Runner
+
+## instalando o sequelize 
+## comando: npm install sequelize reflect-metadata sequelize-typescript
+
+## instalando o sqlite3: npm install sqlite3
