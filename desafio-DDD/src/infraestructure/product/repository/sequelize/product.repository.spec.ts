@@ -8,7 +8,9 @@ describe("Product repository tests",  () => {
     function createProduct(): Product{
         return new Product("1", "Prod 1", 10);
     }
+
     let sequelize: Sequelize;
+    
     beforeEach( async () =>{
         sequelize = new Sequelize({
             dialect: "sqlite",
@@ -77,9 +79,7 @@ describe("Product repository tests",  () => {
         const product2 = new Product("2", "Prod 2", 20);
         await productRepository.create(product2);
 
-        const productsModel = await (await ProductModel.findAll()).map((item) =>{
-            return new Product(item.id, item.name, item.price);
-        });
+        const productsModel = await productRepository.findAll();
         const products = [product, product2];
         expect(products).toEqual(productsModel);
     });

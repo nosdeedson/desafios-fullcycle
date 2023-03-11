@@ -35,5 +35,20 @@ export default class Address {
         return `${this._street}, ${this._number}, ${this._zip}, ${this._city}`;
     }
 
+    get street(): string{
+        return this._street;
+    }
+
+    get zipcode(): string{
+        return this._zip
+    }
+
+    get city(): string{
+        return this._city;
+    }
+
+    get number(): number{
+        return this._number
+    }
 
 }

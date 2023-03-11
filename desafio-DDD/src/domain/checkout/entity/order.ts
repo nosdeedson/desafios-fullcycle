@@ -40,7 +40,7 @@ export default class Order {
     }
 
     total(): number{
-        return this._items.reduce((acumulador, item) => acumulador + item.price, 0)
+        return this._items.reduce((acumulador, item) =>  acumulador + (item.price * item.quantity), 0 )
     }
 
     get customerId(): string{
