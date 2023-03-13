@@ -112,7 +112,7 @@ describe("Order Repository init tests", () => {
         expected(orderModel, order);
     });
 
-    // to fix
+    
     it("should update an order", async () =>{
         const customer = await createCustomer();
         const product = await createProduct();
@@ -128,33 +128,26 @@ describe("Order Repository init tests", () => {
             item.name = 'teste ' + (index + 1)
             item.quantity += 1
         });
-        const orderItem3 = new OrderItem("123", product.name, product.price, product.id, 2);
-        order.OrderItem.push(orderItem3)
         order.total()
-        const t  = sequelize.transaction();
         await orderRepository.update(order);
-        (await t).commit();
+
         const orderUpdated = await OrderModel.findOne({where: {id: '123'}, include: ["items"]})
-        // const orderUpdated = await orderRepository.find(order.id);
         
-        console.log(orderUpdated.toJSON())
-        // expect(orderUpdated).toEqual(order);
+        expected(orderUpdated, order);
     })
 
     it('should find one order', async () => {
-        jest.setTimeout(50000)
         const customer = await createCustomer();
         const product = await createProduct();
 
         const orderRepository = new OrderRepository();
         const order = createOrder(product, customer);
-        console.log(order)
         await orderRepository.create(order);
         const orderModel = await orderRepository.find(order.id);
         expect(orderModel).toEqual(order)
     });
 
-    it('should find all one order', async () => {
+    it('should find all order', async () => {
         const customer = await createCustomer();
         const product = await createProduct();
 
@@ -162,7 +155,6 @@ describe("Order Repository init tests", () => {
         const orders = createOrders(product, customer);
         await orderRepository.create(orders[0]);
         await orderRepository.create(orders[1]);
-        console.log(orders)
         const orderModels = await orderRepository.findAll();
         expect(orderModels).toEqual(orders)
     })

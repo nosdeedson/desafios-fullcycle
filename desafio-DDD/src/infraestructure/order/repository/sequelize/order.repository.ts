@@ -31,21 +31,21 @@ export default class OrderRepository implements OrderRepositoryInterface{
     async update(entity: Order): Promise<void> {
         let order = await OrderModel.findOne({where: {id: '123'}, include: ["items"]})
         
-        const items = entity.OrderItem.map((item) =>{
-            return {
-                id: item.id,
+        entity.OrderItem.map((item) => {
+            OrderItemModel.update({
+                product_id: item.produto_id,
                 name: item.name,
                 price: item.price,
-                product_id: item.produto_id,
                 quantity: item.quantity
-            }
+            }, { where: { id: item.id } });
+
         })
-        order.setDataValue("items", items)
-        order.setDataValue("total", entity.total())
-        order.setDataValue("id", entity.id)
-        order.setDataValue("customer_id", entity.customerId)
-        await order.save().then((resp) => console.log(resp))
-        // await OrderModel.update(order, {where: {id: entity.id}})
+
+        OrderModel.update({
+            id: entity.id,
+            customer_id: entity.customerId,
+            total: entity.total(),
+        }, {where: {id: entity.id}})
     }
 
     async find(id: string): Promise<Order> {
