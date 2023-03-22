@@ -33,7 +33,7 @@ describe("Domain events tests", () => {
         const eventDispatcher = new EventDispatcher();
         const eventHandler = new SendEmailWhenProductIsCreatedHandler();
 
-        eventDispatcher.register("ProductCreateEvent", eventHandler);
+        eventDispatcher.register("ProductCreatedEvent", eventHandler);
 
         expect(
             eventDispatcher.getEventHandlers["ProductCreatedEvent"][0]
