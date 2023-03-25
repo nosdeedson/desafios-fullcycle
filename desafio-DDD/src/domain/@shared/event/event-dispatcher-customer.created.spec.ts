@@ -2,7 +2,9 @@ import Customer from "../../customer/entity/customer";
 import CustomerAddressChangedEvent from "../../customer/event/customer-address-changed.event";
 import CustomerCreatedEvent from "../../customer/event/customer-created.event";
 import EnviaConsoleLog1HandlerWhenCustomerIsCreated from "../../customer/event/handler/envia-console-log1-when-customer-is-created.handler";
-import EnviaConsoleLog2HandlerWhenCustomerAddressIsChanged from "../../customer/event/handler/envia-console-log2-when-customer-address-is-changed.handler";
+import EnviaConsoleLog2HandlerWhenCustomerIsCreated from "../../customer/event/handler/envia-console-log2-when-customer-is-created.handler";
+import PrintAddressHandlerWhenCustomerAddressIsChanged from "../../customer/event/handler/print-address-when-customer-address-is-changed.handler";
+import EnviaConsoleLog2HandlerWhenCustomerAddressIsChanged from "../../customer/event/handler/print-address-when-customer-address-is-changed.handler";
 import Address from "../../customer/value-object/address";
 import EventDispatcher from "./event-dispatcher"
 
@@ -58,11 +60,15 @@ describe("Customer events tests", () =>{
     it("should notify all event handlers", () =>{
         const customerDispaticher = new EventDispatcher();
         const customerHandler = new EnviaConsoleLog1HandlerWhenCustomerIsCreated();
-        const customerAddressHandler = new EnviaConsoleLog2HandlerWhenCustomerAddressIsChanged();
+        const customerHandler2 = new EnviaConsoleLog2HandlerWhenCustomerIsCreated();
+        const customerAddressHandler = new PrintAddressHandlerWhenCustomerAddressIsChanged();
         
         let spyEventHandler = jest.spyOn(customerHandler, "handle");
+        spyEventHandler = jest.spyOn(customerHandler2, "handle");
 
         customerDispaticher.register("CustomerCreatedEvent", customerHandler);
+        customerDispaticher.register("CustomerCreatedEvent", customerHandler2);
+
         customerDispaticher.register("CustomerAddressChangedEvent", customerAddressHandler);
 
         expect(customerDispaticher.getEventHandlers["CustomerCreatedEvent"][0]).toMatchObject(customerHandler);
