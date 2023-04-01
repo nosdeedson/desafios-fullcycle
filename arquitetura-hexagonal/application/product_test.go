@@ -3,7 +3,7 @@ package application_test
 import (
 	"testing"
 
-	"github.com/codeedu/go-hexagonal/application"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/arquitetura-hexagonal/application"
 	"github.com/stretchr/testify/require"
 )
 
@@ -14,5 +14,5 @@ func TestProduct_Enable(t *testing.T) {
 	product.Price = 10
 
 	err := product.Enable()
-	require.Nill(t, err)
+	require.Nil(t, err)
 }

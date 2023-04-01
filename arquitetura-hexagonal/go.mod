@@ -1,3 +1,3 @@
-module github.com/codeedu/go-hexagonal
+module github.com/nosdeedson/desafios-fullcycle/tree/main/arquitetura-hexagonal
 
 go 1.16
