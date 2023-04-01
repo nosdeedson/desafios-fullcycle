@@ -7,3 +7,5 @@
 ## the command above dowloadt the dependencies needed in the package
 
 ## command to run the tests: go test ./...
+## run all the tests (files)
+## command got test file.go run the tests in the file
