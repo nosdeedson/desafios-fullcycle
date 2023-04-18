@@ -3,6 +3,7 @@ package web
 import (
 	"github.com/codegangsta/negroni"
 	"github.com/gorilla/mux"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/arquitetura-hexagonal/adapters/web/handler"
 	"github.com/nosdeedson/desafios-fullcycle/tree/main/arquitetura-hexagonal/application"
 )
 
@@ -21,4 +22,5 @@ func (w Webserver) Serve() {
 	)
 
 	handler.MakeProductHandlers(r, n, w.Serve)
+
 }

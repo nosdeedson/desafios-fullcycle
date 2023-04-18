@@ -4,7 +4,7 @@ import "encoding/json"
 
 func jsonError(msg string) []byte {
 	error := struct {
-		Message string `json:message`
+		Message string `json:"message"`
 	}{
 		msg,
 	}

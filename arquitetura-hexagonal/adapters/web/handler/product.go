@@ -110,23 +110,37 @@ func disableProduct(service application.ProductServiceInterface) http.Handler {
 func createProduct(service application.ProductServiceInterface) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
+		vars := mux.Vars(r)
+		id := vars["id"]
+		product, err := service.Get(id)
+		if err != nil {
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
+
 		var productDto dto.Product
-		err := json.NewEncoder(r.Body).Decode(&productDto)
+		err = json.NewDecoder(r.Body).Decode(&productDto)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write(jsonError(err.Error()))
 			return
 		}
-		product, err := service.Create(productDto.Name, productDto.Price)
+		err = product.ChangePrice(productDto.Price)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write(jsonError(err.Error()))
 			return
 		}
-		err = json.NewEncoder(w).Encode(product)
+
+		result, err := service.Disable(product)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write(jsonError(err.Error()))
+			return
+		}
+		err = json.NewEncoder(w).Encode(result)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 	})

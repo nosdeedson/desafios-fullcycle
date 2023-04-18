@@ -119,7 +119,7 @@ func (p *Product) GetName() string {
 	return p.Name
 }
 
-func (p *Product) getStatus() string {
+func (p *Product) GetStatus() string {
 	return p.Status
 }
 
