@@ -12,3 +12,11 @@
 
 ## creating mocks
 ## type inside the container appproduct: mockgen -destination=application/mocks/application.go -source=application/product.go application
+
+## IMPORTANT: everry time that the container is created is necessary to run the command above
+
+## command cobra
+
+## first type inside the container appproduct: cobra-cli init
+## after: cobra-cli add cli
+##
