@@ -31,3 +31,10 @@
 ## comando: npm install sequelize reflect-metadata sequelize-typescript
 
 ## instalando o sqlite3: npm install sqlite3
+
+## instalando o express e dotenv: npm i express @types/express dotenv
+## @types/express é necessário, por estar usando typescript
+
+## instalanod o nodemon: npm i nodemon
+## instalanod o supertest: npm i -D supertest
+## instalanod o supertest: npm i -D @types/supertest

@@ -102,5 +102,5 @@
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "src/infraestructure/api/server.ts"  ],
 }
