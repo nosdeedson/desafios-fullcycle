@@ -40,8 +40,6 @@ describe("E2E test for customer", () =>{
             });
         
         expect(response.status).toBe(500);
-        console.log("second one finished")
-
     })
 
     it("should list all customer",async () => {
