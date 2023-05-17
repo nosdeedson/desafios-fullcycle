@@ -36,4 +36,16 @@ describe("Product tests unit", () =>{
         product.changePrice(10);
         expect(product.price).toBe(10);
     })
+
+    it("should throw two erros", () =>{
+        expect( 
+            () =>{ let product = new Product("123", "", -1)}
+            ).toThrowError("product: Name is required,product: Price should be greater than zero")
+    })
+
+    it("should throw three erros", () =>{
+        expect( 
+            () =>{ let product = new Product("", "", -1)}
+            ).toThrowError("product: Id is required,product: Name is required,product: Price should be greater than zero")
+    })
 })
