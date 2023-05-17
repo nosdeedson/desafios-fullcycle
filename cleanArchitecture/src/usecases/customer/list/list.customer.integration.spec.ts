@@ -24,7 +24,7 @@ describe("Integration test unit for listing customer", () =>{
         await sequelize.close();
     })
 
-    it("should create a customer",async () => {
+    it("should list all customers", async () => {
         const customerRepository = new CustomerRepository();
         const useCase = new ListCustomerUseCase (customerRepository);
 

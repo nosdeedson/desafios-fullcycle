@@ -7,24 +7,21 @@ describe("Product tests unit", () =>{
     }
 
     it("should throw error when id is empty", () =>{
-        let product = createProduct();
         expect( () =>{
-            product.id = "";
-        }).toThrowError("Id is required");
+            let product = new Product("", "product", 10)
+        }).toThrowError("product: Id is required");
     });
 
     it("should throw error when name is empty", () =>{
-        let product = createProduct();
         expect( () =>{
-            product.changeName("");
-        }).toThrowError("Name is required");
+            let product = new Product("123", "", 10)
+        }).toThrowError("product: Name is required");
     });
 
     it("should throw error when price is less than zero", () =>{
-        let product = createProduct();
         expect( () =>{
-            product.changePrice(-1);
-        }).toThrowError("Price should be greater than zero");
+            let product = new Product('123', 'product', -10)
+        }).toThrowError("product: Price should be greater than zero");
     });
 
     it("should change name", () =>{
