@@ -38,7 +38,6 @@ describe("Integration test unit for creating customer", () =>{
 
         const result = await useCase.execute(input);
         const teste = await customerRepository.find(result.id)
-        // console.log(teste)
         expect.any(result.id)
         expect(result.address).toEqual(input.address)
         expect(teste.id).toEqual(result.id)

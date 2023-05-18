@@ -25,8 +25,6 @@ export default class ProductYupValidator implements ValidatorInterface<Product>{
             
         } catch (errors) {
             const err = errors as yup.ValidationError;
-            console.log(err.errors)
-
             err.errors.forEach( erro => {
                 entity.notification.addError({
                     context: "product",

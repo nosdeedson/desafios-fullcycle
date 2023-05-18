@@ -40,3 +40,6 @@
 ## instalando o supertest: npm i -D @types/supertest
 
 ## instalando o YUP: npm install -S yup
+
+## instalando api para converter jso to xml: npm install jstoxml
+## npm i -D @types/jstoxml

@@ -43,7 +43,6 @@ describe("Integration unit test for updating customer", () =>{
             }
         }
         const result = await useCase.execute(input);
-        // console.log(result)
         expect(result).toEqual(input)
     })
 })
