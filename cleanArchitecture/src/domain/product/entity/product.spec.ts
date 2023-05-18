@@ -3,7 +3,7 @@ import Product from "./product";
 describe("Product tests unit", () =>{
 
     function createProduct(): Product {
-        return new Product("1", "product 1", 0);
+        return new Product("1", "product 1", 1);
     }
 
     it("should throw error when id is empty", () =>{
@@ -20,8 +20,8 @@ describe("Product tests unit", () =>{
 
     it("should throw error when price is less than zero", () =>{
         expect( () =>{
-            let product = new Product('123', 'product', -10)
-        }).toThrowError("product: Price should be greater than zero");
+            let product = new Product('123', 'product', -1)
+        }).toThrowError("product: price must be greater than 0");
     });
 
     it("should change name", () =>{
@@ -32,7 +32,7 @@ describe("Product tests unit", () =>{
 
     it("should change price", () =>{
         let product = createProduct();
-        expect(product.price).toBe(0);
+        expect(product.price).toBe(1);
         product.changePrice(10);
         expect(product.price).toBe(10);
     })
@@ -40,12 +40,12 @@ describe("Product tests unit", () =>{
     it("should throw two erros", () =>{
         expect( 
             () =>{ let product = new Product("123", "", -1)}
-            ).toThrowError("product: Name is required,product: Price should be greater than zero")
+            ).toThrowError("product: Name is required,product: price must be greater than 0")
     })
 
     it("should throw three erros", () =>{
         expect( 
             () =>{ let product = new Product("", "", -1)}
-            ).toThrowError("product: Id is required,product: Name is required,product: Price should be greater than zero")
+            ).toThrowError("product: Id is required,product: Name is required,product: price must be greater than 0")
     })
 })

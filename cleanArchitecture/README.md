@@ -37,4 +37,6 @@
 
 ## instalanod o nodemon: npm i nodemon
 ## instalanod o supertest: npm i -D supertest
-## instalanod o supertest: npm i -D @types/supertest
+## instalando o supertest: npm i -D @types/supertest
+
+## instalando o YUP: npm install -S yup
