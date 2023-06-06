@@ -6,6 +6,8 @@ type Product ={
     salesPrice: number;
 }
 
+export interface FindAllProductInputDto{}
+
 export interface FindAllProductOutputDto{
     products: Product[]
 }

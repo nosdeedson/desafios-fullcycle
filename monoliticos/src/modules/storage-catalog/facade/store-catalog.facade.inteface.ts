@@ -22,5 +22,5 @@ export interface FindAllStoreCatalogFacadeOutputDto{
 
 export interface StoreCatalogFacadeInterface{
     find(id: FindStoreCatalogFacadeInputDto): Promise<FindStoreCatalogFacadeOutputDto>;
-    findAll(): Promise<FindAllStoreCatalogFacadeOutputDto>;
+    findAll(input: FindStoreCatalogFacadeInputDto): Promise<FindAllStoreCatalogFacadeOutputDto>;
 }
