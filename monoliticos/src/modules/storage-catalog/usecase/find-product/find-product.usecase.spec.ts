@@ -24,9 +24,9 @@ describe("find a product use case test unit", () =>{
         const usecase =  new FindProductUseCase(productRepository);
         const result = await usecase.execute(input);
         expect(productRepository.find).toHaveBeenCalled();
-        expect(result.id).toEqual(product.id.id);
+        expect(result.id.id).toEqual(product.id.id);
         expect(result.name).toEqual(product.name);
-        expect(result.descrption).toEqual(product.description);
+        expect(result.description).toEqual(product.description);
         expect(result.salesPrice).toEqual(product.salesPrice);
         // console.log(result)
     })

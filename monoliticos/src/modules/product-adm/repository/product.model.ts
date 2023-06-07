@@ -8,24 +8,24 @@ export default class ProductModel extends Model{
     
     @PrimaryKey
     @Column({allowNull: false})
-    id: string;
+    declare id: string;
 
     @Column({allowNull: false})
-    name: string;
+    declare name: string;
 
     @Column({allowNull: false})
-    description: string;
+    declare description: string;
 
     @Column({allowNull: false})
-    purchasePrice: number;
+    declare purchasePrice: number;
 
     @Column({allowNull: false})
-    stock: number;
+    declare stock: number;
 
     @Column({allowNull: false})
-    createAt: Date;
+    declare createAt: Date;
 
     @Column({allowNull: false})
-    updateAt: Date;
+    declare updateAt: Date;
 
 }
