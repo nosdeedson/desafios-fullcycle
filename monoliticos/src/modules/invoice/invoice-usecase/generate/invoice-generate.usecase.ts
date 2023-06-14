@@ -8,22 +8,20 @@ export default class InvoiceGenerateUseCase implements UseCaseInterface{
 
     constructor(private invoiceRepository: InvoiceGateway){}
     async execute(input: GenerateInvoiceUseCaseInputDto): Promise<GenerateInvoiceUseCaseOutputDto> {
-        
-        const product1 = new ProductEntity({name: 'product1', price: 10})
-        const product2 = new ProductEntity({name: 'product2', price: 20})
-
-        const items = [product1, product2]
-
+        let items: ProductEntity[] = [];
+        input.items.forEach(item =>{
+            items.push(new ProductEntity(item.id, item.name, item.price))
+        })
         const props = {
-            name: 'teste',
-            document: '123456789',
-            street: 'street',
-            number: '10',
-            complement: 'complement',
-            city: 'city',
-            state: 'state',
-            zipCode: 'zipCode',
-            items: items,
+            name: input.name,
+            document: input.document,
+            street: input.street,
+            number: input.number,
+            complement: input.complement,
+            city: input.city,
+            state: input.state,
+            zipCode: input.zipCode,
+            items: items
         };
 
         const invoice = new InvoiceEntity(props);

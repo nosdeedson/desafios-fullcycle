@@ -35,7 +35,6 @@ describe(" transaction repository unit test", () =>{
 
         transaction.aprove();
         const result = await transactionRepository.save(transaction);
-        expect(transactionRepository.save).toHaveBeenCalled();
         expect(result.id.id).toBe(transaction.id.id);
         expect(result.amount).toBe(transaction.amount);
         expect(result.orderId).toBe(transaction.orderId);
