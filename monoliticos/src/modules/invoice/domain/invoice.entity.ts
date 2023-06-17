@@ -14,7 +14,7 @@ type InvoiceEntityProps ={
     city: string;
     state: string;
     zipCode: string;
-    items: ProductEntity[];
+    items?: ProductEntity[];
     createAt?: Date;
     updateAt?: Date;
 }
@@ -38,7 +38,7 @@ export default class InvoiceEntity extends BaseEntity implements AggregateRoot{
             zipCode: props.zipCode,
             city: props.city
         })
-        this._items = props.items
+        this._items = props?.items
     }
 
     get name(): string{

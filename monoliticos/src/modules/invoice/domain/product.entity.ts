@@ -13,8 +13,8 @@ export default class ProductEntity extends BaseEntity implements AggregateRoot{
     private _name: string;
     private _price: number;
 
-    constructor(id: string, name: string, price: number){
-        super(new Id(id))
+    constructor(id: string, name: string, price: number, createAt: Date, updateAt: Date){
+        super(new Id(id), createAt, updateAt)
         this._name = name;
         this._price = price;
     }
