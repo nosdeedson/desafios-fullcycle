@@ -1,7 +1,5 @@
 import UseCaseInterface from "../../@shared/usecase/use-case.interface";
 import { FindAllProductInputDto } from "../usecase/find-all-products/find-all-product.dto";
-import FindAllProductsUseCase from "../usecase/find-all-products/find-all-products.usecase";
-import FindProductUseCase from "../usecase/find-product/find-product.usecase";
 import { FindAllStoreCatalogFacadeOutputDto, FindStoreCatalogFacadeInputDto, FindStoreCatalogFacadeOutputDto, StoreCatalogFacadeInterface } from "./store-catalog.facade.inteface";
 
 export interface UseCaseProps{

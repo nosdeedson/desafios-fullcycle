@@ -42,7 +42,6 @@ export default class InvoiceRepository implements InvoiceGateway{
         const result = await InvoiceModel.findOne({where: {id: input.id.id}, include: ["items"]});
         const entity = result.dataValues
         const products = entity.items.map((item: any) =>  {
-            console.log(item.dataValues)
             return new ProductEntity(item.dataValues.id, item.dataValues.name, item.dataValues.price, item.dataValues.createAt, item.dataValues.updateAt );
         } )
         const props = {
@@ -63,9 +62,11 @@ export default class InvoiceRepository implements InvoiceGateway{
     }
 
     async find(input: string): Promise<InvoiceEntity> {
-        const result = await InvoiceModel.findOne({where: {id: input}});
+        const result = await InvoiceModel.findOne({where: {id: input}, include: ['items']});
         const entity = result.dataValues
-        let items : ProductEntity[] = []
+        let itemsResults : ProductEntity[] = entity.items.map((item: any) =>  {
+            return new ProductEntity(item.dataValues.id, item.dataValues.name, item.dataValues.price, item.dataValues.createAt, item.dataValues.updateAt );
+        } )
         const props = {
             street: entity.street,
             number: entity.number,
@@ -78,7 +79,7 @@ export default class InvoiceRepository implements InvoiceGateway{
             document: entity.document,
             createAt: entity.createAt,
             updateAt: entity.updateAt,
-            items: items
+            items: itemsResults
         }
 
         return new InvoiceEntity(props)
