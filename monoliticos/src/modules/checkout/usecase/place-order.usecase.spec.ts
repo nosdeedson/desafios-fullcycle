@@ -1,0 +1,196 @@
+import { string } from "yup";
+import { PlaceOrderInputDto } from "./place-order/place-order.dto"
+import PlaceOrderUseCase from "./place-order/place-order.usecase"
+import Product from "../domain/product.entity";
+import Id from "../../domain/entity/value-object/id.value-object";
+
+const mockDate = new Date(2000, 1, 1)
+
+describe("place order unit test", () =>{
+
+    describe('getProducts method', () =>{
+        beforeAll(() =>{
+            jest.useFakeTimers();
+            jest.setSystemTime(mockDate)
+        });
+
+        afterAll(() =>{
+            jest.useRealTimers();
+        });
+
+        //@ts-expect-error - no params in constructor
+        const placeOrder = new PlaceOrderUseCase();
+
+        it('should throw an error product not found',async () => {
+            const mockCatalogFacade = {
+                find: jest.fn().mockReturnValue(null)
+            }
+
+            //@ts-expect-error - force set catalogFacade
+            placeOrder['_catalogFacade'] = mockCatalogFacade;
+
+            await expect(placeOrder['getProduct']('0')).rejects.toThrow(
+                new Error('product not found')
+            )
+        });
+
+        it('should a product',async () => {
+            const mockCatalogFacade ={
+                find: jest.fn().mockResolvedValue({
+                    id: '0',
+                    name: 'product',
+                    description: 'description',
+                    salesPrice: 10
+                })
+            };
+
+            //@ts-expect-error - force set catalogFacade
+            placeOrder['_catalogFacade'] = mockCatalogFacade;
+            await expect(placeOrder['getProduct']('0')).resolves.toEqual(
+                new Product({
+                    id: new Id('0'),
+                    name: 'product',
+                    description: 'description',
+                    salesPrice: 10
+                })
+            );
+            expect(mockCatalogFacade.find).toHaveBeenCalled()
+
+        })
+    })
+
+    describe('should validate products methods', () => {
+        //@ts-expect-error - no params in constructor
+        const placeOrder = new PlaceOrderUseCase();
+
+        it('should throw error if no product selected',async () => {
+            const input : PlaceOrderInputDto= {clientId: '1', products: []};
+
+            await expect(placeOrder['validateProducts'](input)).rejects.toThrow(new Error('no product selected'));
+        });
+
+        it('should throw an error product without stock',async () => {
+            const mockProductFacade = {
+                checkStock: jest.fn(({productId}: {productId: string}) => 
+                    Promise.resolve({
+                        productId,
+                        stock: productId === '1' ? 0 : 1
+                    })
+                )
+            };
+
+            //@ts-expect-error - force set productFacade
+            placeOrder['_productFacade'] = mockProductFacade;
+
+            let input : PlaceOrderInputDto = {
+                clientId: '1',
+                products: [{productId: '1'}]
+            }
+            await expect(
+                placeOrder['validateProducts'](input)
+            ).rejects.toThrow(new Error('no stock available'));
+
+            input = {
+                clientId: '1',
+                products: [{productId: '1'}, {productId: '2'}]
+            }
+            await expect(
+                placeOrder['validateProducts'](input)
+            ).rejects.toThrow(new Error('no stock available'))
+            expect(mockProductFacade.checkStock).toBeCalledTimes(2);
+
+            input = {
+                clientId: '1',
+                products: [{productId: '1'}, {productId: '2'}, {productId: '3'}]
+            }
+            await expect(
+                placeOrder['validateProducts'](input)
+            ).rejects.toThrow(new Error('no stock available'))
+            expect(mockProductFacade.checkStock).toBeCalledTimes(3);
+        })
+    })
+
+
+    describe("execute method", () => {
+
+        it('should throw an error when client not found',async () => {
+            const mockClientFacade = {
+                find: jest.fn().mockResolvedValue(null),
+            }
+            //@ts-expect-error - no params in constructor
+            const placeOrder = new PlaceOrderUseCase();
+            //@ts-expect-error - force set clientFacade
+            placeOrder['_clientFacade'] = mockClientFacade;
+
+            const input: PlaceOrderInputDto = {clientId: '0', products: []};
+
+            await expect(placeOrder.execute(input)).rejects.toThrow( new Error('client not found'))
+        })
+
+        it('should throw an error if products not valid',async () => {
+            const mockClientFacade = {
+                find: jest.fn().mockResolvedValue(true),
+            }
+            //@ts-expect-error - no params in constructor
+            const placeOrder = new PlaceOrderUseCase();
+
+            const mockValidateProducts = jest
+            //@ts-expect-error - spy on private method
+            .spyOn(placeOrder, 'validateProducts')
+            //@ts-expect-error -  not return never
+            .mockRejectedValue(new Error('no product selected'));
+
+            //@ts-expect-error - force set clientFacade
+            placeOrder['_clientFacade'] = mockClientFacade;
+
+            const input: PlaceOrderInputDto = {clientId: '1', products: []};
+
+            await expect(placeOrder.execute(input)).rejects.toThrow( new Error('no product selected'));
+            expect(mockValidateProducts).toHaveBeenCalledTimes(1)
+        })
+
+
+        describe('place an order', () =>{
+
+            const clientProps = {
+                id: '1c',
+                name: 'jose',
+                document: '123',
+                email: 'test@test',
+                street: 'street',
+                number: '1',
+                complement: 'complement',
+                city: 'city',
+                state: 'state',
+                zipcode: 'zip'
+            };
+
+            const mockClientFacade = {
+                find: jest.fn().mockResolvedValue(clientProps);
+            }
+
+            const mockPayment = {
+                process: jest.fn(),
+            }
+
+            const mockCheckoutRepository = {
+                addOrder: jest.fn()
+            }
+
+            const mockInvoice = {
+                generate: jest.fn().mockResolvedValue({id: 'i1'})
+            }
+
+            const placeOrder = new PlaceOrderUseCase(
+                mockClientFacade,
+                null,
+                null,
+                mockCheckoutRepository,
+                mockInvoice,
+                mockPayment)
+
+        })
+
+    })
+
+})
