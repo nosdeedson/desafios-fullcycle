@@ -23,7 +23,11 @@ export default class Order extends BaseEntity {
     }
 
     approve(): void{
-        this._status = 'aproved';
+        this._status = 'approved';
+    }
+
+    approved(): boolean{
+        return this._status === 'approved'
     }
 
     get total(): number{

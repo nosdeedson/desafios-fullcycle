@@ -1,19 +1,20 @@
 import BaseEntity from "../../domain/entity/base.entity";
 import AggregateRoot from "../../domain/entity/aggregate-root.interface";
 import Id from "../../domain/entity/value-object/id.value-object";
+import AddressDto from "./value-object/address.dto";
 
 type ClientProps ={
     id?: Id;
     name: string;
     email: string;
-    address: string;
+    address: AddressDto;
 }
 
 export default class Client extends BaseEntity implements AggregateRoot{
 
     private _name: string;
     private _email: string;
-    private _address: string;
+    private _address: AddressDto;
 
     constructor(props: ClientProps){
         super(props.id);
@@ -30,7 +31,7 @@ export default class Client extends BaseEntity implements AggregateRoot{
         return this._email;
     }
 
-    get address(): string{
+    get address(): AddressDto{
         return this._address;
     }
 

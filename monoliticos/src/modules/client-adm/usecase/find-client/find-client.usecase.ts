@@ -17,6 +17,7 @@ export default class FindClientUseCase{
             name: result.name,
             email: result.email,
             address: result.address,
+            document: result.document,
             createAt: result.createAt,
             updateAt: result.updateAt
         }

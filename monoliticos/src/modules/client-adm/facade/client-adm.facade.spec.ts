@@ -2,6 +2,7 @@ import { Sequelize } from "sequelize-typescript";
 import ClientModel from "../repository/client.model";
 import ClientAdmFacadeFactory from "../factory/client-adm.facade.factory";
 import Id from "../../domain/entity/value-object/id.value-object";
+import AddressClientDto from "../domain/value-object/address";
 
 describe('client adm facade test unit', () =>{
 
@@ -29,8 +30,9 @@ describe('client adm facade test unit', () =>{
         const input = {
             id: new Id('1'),
             name: 'client',
+            document: 'doc',
             email: 'teste@teste',
-            address: 'address'
+            address: new AddressClientDto('street', '1', 'city', 'zipcode', 'state', 'complement')
         }
 
         await clientFacade.add(input);
@@ -41,7 +43,7 @@ describe('client adm facade test unit', () =>{
         expect(client.id).toEqual('1');
         expect(client.name).toEqual('client');
         expect(client.email).toEqual('teste@teste');
-        expect(client.address).toEqual('address');
+        expect(client.city).toStrictEqual(input.address.city)
 
     })
 
@@ -50,7 +52,13 @@ describe('client adm facade test unit', () =>{
             id: '2',
             name: 'client 2',
             email: 'teste@teste',
-            address: 'address',
+            document: 'doc',
+            street: 'street',
+            state: 'state',
+            complement: 'complement',
+            zipCode: 'zipcode',
+            number: '2',
+            city: 'city',
             createAt: new Date(),
             updateAt: new Date(),
         });
@@ -61,6 +69,6 @@ describe('client adm facade test unit', () =>{
         expect(result.id).toBe('2')
         expect(result.name).toBe('client 2')
         expect(result.email).toBe('teste@teste')
-        expect(result.address).toBe('address')
+        expect(result.address.city).toBe('city')
     })
 })

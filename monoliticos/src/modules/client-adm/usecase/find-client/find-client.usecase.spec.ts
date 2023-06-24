@@ -1,12 +1,14 @@
 import Id from "../../../domain/entity/value-object/id.value-object"
 import ClientEntity from "../../domain/client.entity"
+import AddressClientDto from "../../domain/value-object/address"
 import FindClientUseCase from "./find-client.usecase"
 
 const client = new ClientEntity({
     id: new Id('1'),
     name: 'client',
     email: 'teste@teste',
-    address: 'address'
+    document: 'doc',
+    address: new AddressClientDto('street', '1', 'city', 'zipcode', 'state', 'complement')
 })
 
 const MockRepository = () =>{
@@ -28,6 +30,7 @@ describe("find client use case test unit", () =>{
         expect(result.id).toBe(client.id.id)
         expect(result.name).toBe(client.name)
         expect(result.email).toBe(client.email)
-        expect(result.address).toBe(client.address)
+        expect(result.document).toBe(client.document)
+        expect(result.address).toStrictEqual(client.address)
     })
 })
