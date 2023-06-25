@@ -6,15 +6,21 @@ import Id from "../../domain/entity/value-object/id.value-object";
 
 export default class ProductRepository implements ProductGateway{
     async add(product: Product): Promise<void> {
-        await ProductModel.create({
-            id: product.id.id,
-            name: product.name,
-            description: product.description,
-            purchasePrice: product.purchasePrice,
-            stock: product.stock,
-            createAt: new Date(),
-            updateAt: new Date(),
-        })
+        try {
+            await ProductModel.create({
+                id: product.id.id,
+                name: product.name,
+                description: product.description,
+                purchasePrice: product.purchasePrice,
+                salesPrice: (product.purchasePrice * 1.3),
+                stock: product.stock,
+                createAt: new Date(),
+                updateAt: new Date(),
+            });
+            
+        } catch (error) {
+            throw error
+        }
     }
 
     async find(id: string): Promise<Product> {

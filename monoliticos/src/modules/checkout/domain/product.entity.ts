@@ -5,13 +5,13 @@ import Id from "../../domain/entity/value-object/id.value-object";
 type ProductProps = {
     id: Id;
     name: string;
-    description: string;
+    description?: string;
     salesPrice: number;
 }
 
 export default class Product extends BaseEntity implements AggregateRoot{
     private _name: string;
-    private _description: string;
+    private _description?: string;
     private _salesPrice: number;
 
     constructor(props: ProductProps){

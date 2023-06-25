@@ -1,8 +1,9 @@
-import { Column, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DefaultScope, ForeignKey, Model, PrimaryKey, Table } from "sequelize-typescript";
+import InvoiceModel from "../../invoice/repository/invoice.model";
 
 @Table({
     tableName: 'products',
-    timestamps: false
+    timestamps: false, 
 })
 export default class ProductModel extends Model{
     
@@ -16,16 +17,18 @@ export default class ProductModel extends Model{
     @Column({allowNull: false})
     declare description: string;
 
-    @Column({allowNull: false})
+    @Column({allowNull: true})
     declare purchasePrice: number;
 
-    @Column({allowNull: false})
+    @Column({allowNull: true})
+    declare salesPrice: number;
+
+    @Column({allowNull: true})
     declare stock: number;
 
-    @Column({allowNull: false})
+    @Column({allowNull: true})
     declare createAt: Date;
 
-    @Column({allowNull: false})
+    @Column({allowNull: true})
     declare updateAt: Date;
-
 }

@@ -54,6 +54,7 @@ export default class PlaceOrderUseCase implements UseCaseInterface{
             id: new Id(client.id),
             name: client.name,
             email: client.email,
+            document: client.document,
             address: new AddressDto(client.city, client.complement, client.number, client.state, client.street, client.zipCode),
         })
 

@@ -1,10 +1,9 @@
 import { Sequelize } from "sequelize-typescript";
-import Id from "../../domain/entity/value-object/id.value-object";
-import Product from "../domain/product.entity";
 import FindProductUseCase from "../usecase/find-product/find-product.usecase";
-import ProductModel from "./product.model";
+import ProducStorageCatalogtModel from "./product.model";
 import ProductRepository from "./product.repository"
 import FindAllProductsUseCase from "../usecase/find-all-products/find-all-products.usecase";
+import InvoiceModel from "../../invoice/repository/invoice.model";
 
 
 describe("product repository test unit", () =>{
@@ -18,7 +17,7 @@ describe("product repository test unit", () =>{
             logging: false,
             sync:{force: true}
         });
-        await sequelize.addModels([ProductModel]);
+        await sequelize.addModels([ProducStorageCatalogtModel, InvoiceModel]);
         await sequelize.sync();
     });
 
@@ -27,14 +26,14 @@ describe("product repository test unit", () =>{
     });
 
     it("should find all products test unit",async () => {
-        await ProductModel.create({
+        await ProducStorageCatalogtModel.create({
             id: '1',
             name: 'product',
             description: 'product description',
             salesPrice: 10
         });
 
-        await ProductModel.create({
+        await ProducStorageCatalogtModel.create({
             id: '2',
             name: 'product 1',
             description: 'product2 description',
@@ -52,7 +51,7 @@ describe("product repository test unit", () =>{
     })
 
     it("should find a product test unit",async () => {
-        await ProductModel.create({
+        await ProducStorageCatalogtModel.create({
             id: '1',
             name: 'product',
             description: 'product description',
