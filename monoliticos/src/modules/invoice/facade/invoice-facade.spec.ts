@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
 import InvoiceModel from "../repository/invoice.model";
-import ProductModel from "../repository/product.model";
+import ProductInvoiceModel from "../repository/product.model";
 import InvoiceEntity from "../domain/invoice.entity";
 import ProductEntity from "../domain/product.entity";
 import Id from "../../domain/entity/value-object/id.value-object";
@@ -57,7 +57,7 @@ describe("invoice facade unit test", () => {
             sync: { force: true },
         });
 
-        await sequelize.addModels([InvoiceModel, ProductModel]);
+        await sequelize.addModels([InvoiceModel, ProductInvoiceModel]);
         await sequelize.sync();
     });
 
@@ -65,22 +65,20 @@ describe("invoice facade unit test", () => {
         await sequelize.close();
     });
 
-    function validateResult(result: any): void{
-        expect(result).toBeDefined()
-        expect(result.id).toBeDefined()
-        expect(result.name).toBe('invoice')
-        expect(result.items.length).toBe(2)
-        expect(result.items[0].id).toBe('1')
-        expect(result.items[1].id).toBe('2')
-    }
-
     it('should create an invoice',async () => {
 
         const invoice = generateInput() 
         const facade = InvoiceFacadeFactory.create();
         const result = await facade.generate(invoice);
-        validateResult(result);
-    })
+        expect(result).toBeDefined()
+        expect(result.id).toBeDefined()
+        expect(result.name).toBe('invoice')
+        expect(result.items.length).toBe(2)
+        expect(result.items[0].id).toBe('1')
+        expect(result.items[0].price).toBe(12)
+        expect(result.items[1].id).toBe('2')
+        expect(result.items[1].price).toBe(21)
+    }, 50000)
 
     it('should find an invoice',async () => {
         const invoice = await createInvoice();
@@ -88,7 +86,8 @@ describe("invoice facade unit test", () => {
             return {
                 id: item.id.id,
                 name: item.name,
-                price: item.price,
+                purchasePrice: item.price,
+                salesPrice: (item.price * 1.3),
                 createAt: item.createAt,
                 updateAt: item.updateAt,
             }
@@ -110,10 +109,17 @@ describe("invoice facade unit test", () => {
             updateAt: invoice.updateAt,
         },
             {
-                include: [{ model: ProductModel }]
+                include: [{ model: ProductInvoiceModel }]
             });
         const facade = InvoiceFacadeFactory.create();
         const result = await facade.find({id: '1'});
-        validateResult(result);
-    })
+        expect(result).toBeDefined()
+        expect(result.id).toBeDefined()
+        expect(result.name).toBe('invoice')
+        expect(result.items.length).toBe(2)
+        expect(result.items[0].id).toBe('1')
+        expect(result.items[0].price).toBe(13)
+        expect(result.items[1].id).toBe('2')
+        expect(result.items[1].price).toBe(19.5)
+    }, 50000)
 })

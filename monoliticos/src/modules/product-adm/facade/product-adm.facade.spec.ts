@@ -2,11 +2,13 @@ import { Sequelize } from "sequelize-typescript";
 import ProductModel from "../repository/product.model";
 import ProductAdmFacadeFactory from "../factory/facade.factory";
 import ProductRepository from "../repository/product.repository";
+import InvoiceModel from "../../invoice/repository/invoice.model";
+import ProductInvoiceModel from "../../invoice/repository/product.model";
 
 describe("productadmfacade test", () =>{
     let sequelize: Sequelize;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         sequelize = new Sequelize({
             dialect: "sqlite",
             storage: ':memory:',
@@ -14,11 +16,11 @@ describe("productadmfacade test", () =>{
             sync: {force: true}
         });
 
-        await sequelize.addModels([ProductModel])
+        await sequelize.addModels([ProductModel, InvoiceModel, ProductInvoiceModel])
         await sequelize.sync();
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         await sequelize.close();
     });
 
@@ -35,7 +37,7 @@ describe("productadmfacade test", () =>{
 
         await productFacade.addProduct(input);
         const result = await ProductModel.findOne({where: {id: input.id}});
-        const product = result.dataValues
+        const product = result.dataValues;
         expect(product).toBeDefined();
         expect(product.id).toBe(input.id);
         expect(product.name).toBe(input.name);
@@ -61,7 +63,7 @@ describe("productadmfacade test", () =>{
         const inputCheckDto = {productId: '1'}
         const result = await productFacade.checkStock(inputCheckDto);
         expect(result.productId).toEqual(input.id);
-        expect(result.stock).toEqual(input.stock)
+        expect(result.stock).toBe(input.stock)
     });
 
 })

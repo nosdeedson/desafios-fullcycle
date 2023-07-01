@@ -20,6 +20,6 @@ export default class OrderModel extends Model{
     @BelongsTo(() => ClientOrder)
     declare client: ClientOrder;
 
-    @HasMany(() => ProductOrder)
+    @HasMany(() => ProductOrder, {onUpdate: 'CASCADE'})
     declare products?: ProductOrder[];
 }

@@ -11,13 +11,15 @@ import OrderModel from '../../modules/checkout/repository/order.model';
 import ClientOrder from '../../modules/checkout/repository/client.order.model';
 import ProductOrder from '../../modules/checkout/repository/product.order.model';
 import InvoiceModel from '../../modules/invoice/repository/invoice.model';
-
+import  ProductInvoiceModel  from '../../modules/invoice/repository/product.model'
+import { invoiceRoute } from './routes/invoice.route';
 
 export const app: Express = express();
 app.use(express.json());
 app.use('/products', productRoute);
 app.use('/clients', clienttRoute)
 app.use('/checkout', checkoutRoute)
+app.use('/invoice', invoiceRoute)
 
 export let sequelize: Sequelize;
 
@@ -35,7 +37,8 @@ async function setupDb() {
     OrderModel,
     ClientOrder,
     ProductOrder,
-    InvoiceModel]);
-  await sequelize.sync();
+    InvoiceModel,
+    ProductInvoiceModel]);
+  await sequelize.sync({force: true});
 }
 setupDb();

@@ -12,25 +12,25 @@ export const checkoutRoute = express.Router();
 
 checkoutRoute.post('/',async (req: Request, res: Response) => {
     try {
-        const products = req.body.products.map((p: { productId: any; }) => { return {productId: p.productId}})
-        const input = {clientId: req.body.clientId, products: products};
         const clientFacade = ClientAdmFacadeFactory.create();
         const productFacade = ProductAdmFacadeFactory.create();
         const storeFacade = StoreCatalogFacadeFactory.create();
-        const checkoutRepocitory = new OrderRepository();
+        const checkoutRepository = new OrderRepository();
         const invoice = InvoiceFacadeFactory.create();
         const payment = PaymentFacadeFactory.create();
         const usecase = new PlaceOrderUseCase(
             clientFacade, 
             productFacade, 
             storeFacade, 
-            checkoutRepocitory,
+            checkoutRepository,
             invoice,
             payment);
+        const products = req.body.products.map((p: { productId: any; }) => { return {productId: p.productId}})
+        const input = {clientId: req.body.clientId, products: products};
         const output = await usecase.execute(input);
         res.status(201).send(output);
     } catch (error: any) {
-        console.log(error.message)
+        console.log(error)
         res.status(500).send(error.message);
     }
 });

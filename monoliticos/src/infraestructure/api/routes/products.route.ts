@@ -26,7 +26,6 @@ productRoute.get('/:productId', async (req: Request, res: Response) => {
     try {
         const usecase = new CheckStockUseCase(new ProductRepository());
         const id = req.params.productId
-        console.log(id)
         const input = {productId: id}
         const output = await usecase.execute(input);
         res.status(200).send(output)

@@ -3,7 +3,6 @@ import AddressClientDto from '../../../modules/client-adm/domain/value-object/ad
 import AddClientUseCase from '../../../modules/client-adm/usecase/add-client/add-client.usecase';
 import ClientRepository from '../../../modules/client-adm/repository/client.repository';
 import FindClientUseCase from '../../../modules/client-adm/usecase/find-client/find-client.usecase';
-import ClientModel from '../../../modules/client-adm/repository/client.model';
 import Id from '../../../modules/domain/entity/value-object/id.value-object';
 
 export const clienttRoute = express.Router();

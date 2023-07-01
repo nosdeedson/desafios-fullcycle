@@ -1,4 +1,6 @@
-import { Column, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { BelongsTo, Column, ForeignKey, Model, PrimaryKey, Table } from "sequelize-typescript";
+import InvoiceModel from "../../invoice/repository/invoice.model";
+import OrderModel from "../../checkout/repository/order.model";
 
 @Table({
     tableName: 'products',
@@ -13,7 +15,7 @@ export default class ProducStorageCatalogtModel extends Model{
     @Column({allowNull: false})
     declare name: string;
 
-    @Column({allowNull: false})
+    @Column({allowNull: true})
     declare description: string;
 
     @Column({allowNull: true})
@@ -30,4 +32,5 @@ export default class ProducStorageCatalogtModel extends Model{
 
     @Column({allowNull: true})
     declare updateAt: Date;
+
 }

@@ -4,6 +4,10 @@ import ProducStorageCatalogtModel from "./product.model";
 import ProductRepository from "./product.repository"
 import FindAllProductsUseCase from "../usecase/find-all-products/find-all-products.usecase";
 import InvoiceModel from "../../invoice/repository/invoice.model";
+import ProductInvoiceModel from "../../invoice/repository/product.model";
+import OrderModel from "../../checkout/repository/order.model";
+import ClientOrder from "../../checkout/repository/client.order.model";
+import ProductOrder from "../../checkout/repository/product.order.model";
 
 
 describe("product repository test unit", () =>{
@@ -17,7 +21,12 @@ describe("product repository test unit", () =>{
             logging: false,
             sync:{force: true}
         });
-        await sequelize.addModels([ProducStorageCatalogtModel, InvoiceModel]);
+        await sequelize.addModels([ProducStorageCatalogtModel,
+            InvoiceModel, 
+            ProductInvoiceModel,
+            OrderModel,
+            ClientOrder,
+            ProductOrder]);
         await sequelize.sync();
     });
 
@@ -55,7 +64,7 @@ describe("product repository test unit", () =>{
             id: '1',
             name: 'product',
             description: 'product description',
-            salesPrice: 10
+            salesPrice: 10,
         });
         
         const productRepository = new ProductRepository();
@@ -64,6 +73,6 @@ describe("product repository test unit", () =>{
         const result = await usecase.execute(input);
         expect(result.id).toEqual('1')
         expect(result.name).toEqual('product')
-    })
+    }, 50000)
 
 })

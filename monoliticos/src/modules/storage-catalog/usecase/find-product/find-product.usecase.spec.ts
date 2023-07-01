@@ -28,6 +28,5 @@ describe("find a product use case test unit", () =>{
         expect(result.name).toEqual(product.name);
         expect(result.description).toEqual(product.description);
         expect(result.salesPrice).toEqual(product.salesPrice);
-        // console.log(result)
     })
 })

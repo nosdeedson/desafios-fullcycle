@@ -4,7 +4,7 @@ import InvoiceEntity from "../domain/invoice.entity";
 import ProductEntity from "../domain/product.entity";
 import { InvoiceGateway } from "../gateway/invoice.gateway";
 import InvoiceModel from "./invoice.model";
-import ProductModel from "./product.model";
+import ProductInvoiceModel from "./product.model";
 
 export default class InvoiceRepository implements InvoiceGateway{
 
@@ -14,7 +14,7 @@ export default class InvoiceRepository implements InvoiceGateway{
             return {
                 id: item.id.id,
                 name: item.name,
-                price: item.price,
+                salesPrice: item.price,
                 createAt: item.createAt,
                 updateAt: item.updateAt,
             }
@@ -34,15 +34,15 @@ export default class InvoiceRepository implements InvoiceGateway{
             total: input.total,
             createAt: input.createAt,
             updateAt: input.updateAt,
-        }, 
+        },
         {
-            include: [{model: ProductModel}]
+            include: {model: ProductInvoiceModel}
         })
 
         const result = await InvoiceModel.findOne({where: {id: input.id.id}, include: ["items"]});
         const entity = result.dataValues
         const products = entity.items.map((item: any) =>  {
-            return new ProductEntity(item.dataValues.id, item.dataValues.name, item.dataValues.price, item.dataValues.createAt, item.dataValues.updateAt );
+            return new ProductEntity(item.dataValues.id, item.dataValues.name, item.dataValues.salesPrice, item.dataValues.createAt, item.dataValues.updateAt );
         } )
         const props = {
             street: entity.street,
@@ -65,7 +65,7 @@ export default class InvoiceRepository implements InvoiceGateway{
         const result = await InvoiceModel.findOne({where: {id: input}, include: ['items']});
         const entity = result.dataValues
         let itemsResults : ProductEntity[] = entity.items.map((item: any) =>  {
-            return new ProductEntity(item.dataValues.id, item.dataValues.name, item.dataValues.price, item.dataValues.createAt, item.dataValues.updateAt );
+            return new ProductEntity(item.dataValues.id, item.dataValues.name, item.dataValues.salesPrice, item.dataValues.createAt, item.dataValues.updateAt );
         } )
         const props = {
             street: entity.street,

@@ -35,7 +35,7 @@ export default class TransactionEntity extends BaseEntity implements AggregateRo
     }
 
     aprove(): void{
-        this._status = 'aproved'
+        this._status = 'approved'
     }
 
     process(): void {

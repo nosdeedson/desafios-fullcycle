@@ -9,8 +9,6 @@ import OrderRepository from "./order.repository"
 import ClientOrder from "./client.order.model"
 import ProductOrder from "./product.order.model"
 
-
-
 describe('order test unit', () =>{
 
     function createOrder(): Order {
@@ -79,5 +77,5 @@ describe('order test unit', () =>{
         await orderRepository.addOrder(order);
         const result = await orderRepository.findOrder('1')
         validateResult(result)
-    })
+    }, 50000)
 })

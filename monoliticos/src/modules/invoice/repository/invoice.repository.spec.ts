@@ -4,7 +4,7 @@ import InvoiceRepository from "./invoice.repository";
 import InvoiceEntity from "../domain/invoice.entity";
 import ProductEntity from "../domain/product.entity";
 import Id from "../../domain/entity/value-object/id.value-object";
-import ProductModel from "./product.model";
+import ProductInvoiceModel from "./product.model";
 
 describe('invoice respository test unit', () =>{
 
@@ -32,7 +32,7 @@ describe('invoice respository test unit', () =>{
             logging: false,
             sync: { force: true }
         });
-        sequelize.addModels([InvoiceModel, ProductModel]);
+        sequelize.addModels([ProductInvoiceModel, InvoiceModel]);
         await sequelize.sync();
     })
 
@@ -62,7 +62,7 @@ describe('invoice respository test unit', () =>{
             return {
                 id: item.id.id,
                 name: item.name,
-                price: item.price,
+                salesPrice: item.price,
                 createAt: item.createAt,
                 updateAt: item.updateAt,
             }
@@ -84,7 +84,7 @@ describe('invoice respository test unit', () =>{
             updateAt: invoice.updateAt,
         },
             {
-                include: [{ model: ProductModel }]
+                include: [{ model: ProductInvoiceModel }]
             });
 
         const invoiceRepository = new InvoiceRepository();
@@ -98,5 +98,5 @@ describe('invoice respository test unit', () =>{
         expect(result.document).toBe('123456456')
         expect(result.address.street).toBe('street')
         expect(result.address.city).toBe('city')
-    })
+    }, 50000)
 })

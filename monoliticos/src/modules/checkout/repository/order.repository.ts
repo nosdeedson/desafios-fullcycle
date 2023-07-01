@@ -15,7 +15,8 @@ export default class OrderRepository implements CheckoutGateway{
             return {
                 id: p.id.id,
                 name: p.name,
-                salesPrice: p.salesPrice
+                salesPrice: p.salesPrice,
+                order_id: order.id.id
             }
         })
 

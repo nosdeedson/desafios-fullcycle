@@ -3,6 +3,8 @@ import ProductModel from "./product.model";
 import Id from "../../domain/entity/value-object/id.value-object";
 import Product from "../domain/product.entity";
 import ProductRepository from "./product.repository";
+import InvoiceModel from "../../invoice/repository/invoice.model";
+import ProductInvoiceModel from "../../invoice/repository/product.model";
 
 describe("ProductRepository", () =>{
 
@@ -15,7 +17,7 @@ describe("ProductRepository", () =>{
             logging: false,
             sync:{force: true}
         });
-        await sequelize.addModels([ProductModel]);
+        await sequelize.addModels([ProductModel, InvoiceModel, ProductInvoiceModel]);
         await sequelize.sync();
     });
 

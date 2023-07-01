@@ -49,34 +49,37 @@ export default class PlaceOrderUseCase implements UseCaseInterface{
         const products = await Promise.all(
             input.products.map((p) => this.getProduct(p.productId))
         );
-
+        
+        const address = new AddressDto(client.address.street, client.address.number, client.address.city, client.address.zipCode, client.address.state, client.address.complement);
         const myClient = new Client({
             id: new Id(client.id),
             name: client.name,
             email: client.email,
             document: client.document,
-            address: new AddressDto(client.city, client.complement, client.number, client.state, client.street, client.zipCode),
+            address: address
         })
 
         const order = new Order({client: myClient, products: products})
 
         const payment = await this._paymentFacade.process({orderId: order.id.id, amount: order.total})
+        const items = products.map((p) => { return { id: null, name: p.name, price: p.salesPrice}})
 
-        const invoice = payment.status === 'approved' ?
-            await this._invoiceFacade.generate({
-                name: client.name,
-                document: '123',
-                city: client.city,
-                complement: client.complement,
-                number: client.number,
-                items: products.map((p) => { return {id: p.id.id, name: p.name, price: p.salesPrice}}),
-                state: client.state,
-                street: client.street,
-                zipCode: client.zipCode
-            }) : null;
+        const invoiceInputDto = {
+            name: client.name,
+            document: client.document,
+            street: client.address.street,
+            number: client.address.number,
+            complement: client.address.complement,
+            city: client.address.city,
+            state: client.address.state,
+            zipCode: client.address.zipCode,
+            items: items
+        }
 
-            payment.status === 'approved' && order.approve();
-            this._checkoutRepository.addOrder(order);
+        const invoice = payment.status === 'approved' ? await this._invoiceFacade.generate(invoiceInputDto) : null;
+
+        payment.status === 'approved' && order.approve();
+        this._checkoutRepository.addOrder(order);
 
         return {
             id: order.id.id,

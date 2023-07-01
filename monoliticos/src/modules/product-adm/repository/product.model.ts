@@ -1,5 +1,4 @@
 import { BelongsTo, Column, DefaultScope, ForeignKey, Model, PrimaryKey, Table } from "sequelize-typescript";
-import InvoiceModel from "../../invoice/repository/invoice.model";
 
 @Table({
     tableName: 'products',
@@ -14,7 +13,7 @@ export default class ProductModel extends Model{
     @Column({allowNull: false})
     declare name: string;
 
-    @Column({allowNull: false})
+    @Column({allowNull: true})
     declare description: string;
 
     @Column({allowNull: true})
@@ -31,4 +30,14 @@ export default class ProductModel extends Model{
 
     @Column({allowNull: true})
     declare updateAt: Date;
+
+    // @ForeignKey(() => InvoiceModel)
+    // declare invoice_id: InvoiceModel;
+
+    // @BelongsTo(() => InvoiceModel)
+    // declare invoice: InvoiceModel;
+
+    // @ForeignKey(() => OrderModel)
+    // declare order_id: string;
+    
 }

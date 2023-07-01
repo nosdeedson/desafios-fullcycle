@@ -110,7 +110,6 @@ describe("place order unit test", () =>{
         })
     })
 
-
     describe("execute method", () => {
 
         it('should throw an error when client not found',async () => {
@@ -149,7 +148,6 @@ describe("place order unit test", () =>{
             expect(mockValidateProducts).toHaveBeenCalledTimes(1)
         })
 
-
         describe('place an order', () =>{
 
             const clientProps = {
@@ -157,12 +155,14 @@ describe("place order unit test", () =>{
                 name: 'jose',
                 document: '123',
                 email: 'test@test',
-                street: 'street',
-                number: '1',
-                complement: 'complement',
-                city: 'city',
-                state: 'state',
-                zipcode: 'zip'
+                address: {
+                    street: 'street',
+                    number: '1',
+                    complement: 'complement',
+                    city: 'city',
+                    state: 'state',
+                    zipcode: 'zip'
+                }
             };
 
             const mockClientFacade = {

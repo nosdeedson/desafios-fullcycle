@@ -18,6 +18,7 @@ const MockRepository = () =>{
 }
 
 describe("check stock unit test", () =>{
+    
     it("should find stock of a product",async () => {
         const productRepository= MockRepository();
         const usecase = new CheckStockUseCase(productRepository);

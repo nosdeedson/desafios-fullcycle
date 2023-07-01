@@ -7,19 +7,19 @@ export default class AddressDto {
     private _complement: string;
 
     constructor(
-    street: string,
-    number: string,
-    city: string,
-    zipCode: string,
-    state: string,
-    complement: string
-    ){
+        street: string,
+        number: string,
+        city: string,
+        zipCode: string,
+        state: string,
+        complement: string
+    ) {
         this._city = city;
         this._number = number;
         this._street = street;
         this._zipCode = zipCode;
         this._state = state;
-        this._complement = complement 
+        this._complement = complement
     }
 
     get street(): string{
