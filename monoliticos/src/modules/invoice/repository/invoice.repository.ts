@@ -62,7 +62,7 @@ export default class InvoiceRepository implements InvoiceGateway{
     }
 
     async find(input: string): Promise<InvoiceEntity> {
-        const result = await InvoiceModel.findOne({where: {id: input}, include: ['items']});
+        const result = await InvoiceModel.findOne({where: {id: input}, include: [{model: ProductInvoiceModel}]});
         const entity = result.dataValues
         let itemsResults : ProductEntity[] = entity.items.map((item: any) =>  {
             return new ProductEntity(item.dataValues.id, item.dataValues.name, item.dataValues.salesPrice, item.dataValues.createAt, item.dataValues.updateAt );

@@ -8,6 +8,7 @@ import OrderModel from "./order.model"
 import OrderRepository from "./order.repository"
 import ClientOrder from "./client.order.model"
 import ProductOrder from "./product.order.model"
+import TransactionModel from "../../payment/repository/transaction.model"
 
 describe('order test unit', () =>{
 
@@ -19,7 +20,7 @@ describe('order test unit', () =>{
             name: 'client',
             address: address,
             email: 'email',
-            document: 'doc'
+            document: 'doc',
         })
         const product = new Product({ description: 'description1', id: new Id('p1'), name: 'product1', salesPrice: 13 })
         const product1 = new Product({ description: 'description2', id: new Id('p2'), name: 'product2', salesPrice: 13 })
@@ -44,7 +45,7 @@ describe('order test unit', () =>{
             logging: false,
             sync: { force: true }
         });
-        sequelize.addModels([OrderModel, ClientOrder, ProductOrder]);
+        sequelize.addModels([OrderModel, ClientOrder, ProductOrder, TransactionModel]);
         await sequelize.sync();
     })
 

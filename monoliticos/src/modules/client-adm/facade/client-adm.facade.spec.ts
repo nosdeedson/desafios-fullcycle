@@ -15,7 +15,6 @@ describe('client adm facade test unit', () =>{
             logging: false,
             sync: {force: true}
         });
-
         await sequelize.addModels([ClientModel])
         await sequelize.sync();
     });

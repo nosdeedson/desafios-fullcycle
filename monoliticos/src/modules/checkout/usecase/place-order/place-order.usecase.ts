@@ -60,7 +60,6 @@ export default class PlaceOrderUseCase implements UseCaseInterface{
         })
 
         const order = new Order({client: myClient, products: products})
-
         const payment = await this._paymentFacade.process({orderId: order.id.id, amount: order.total})
         const items = products.map((p) => { return { id: null, name: p.name, price: p.salesPrice}})
 
@@ -79,7 +78,7 @@ export default class PlaceOrderUseCase implements UseCaseInterface{
         const invoice = payment.status === 'approved' ? await this._invoiceFacade.generate(invoiceInputDto) : null;
 
         payment.status === 'approved' && order.approve();
-        this._checkoutRepository.addOrder(order);
+        await this._checkoutRepository.addOrder(order);
 
         return {
             id: order.id.id,

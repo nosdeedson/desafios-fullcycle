@@ -1,10 +1,9 @@
-import { BelongsTo, Column, ForeignKey, Model, PrimaryKey, Table } from "sequelize-typescript";
-import Order from "../domain/order.entity";
+import { Column, ForeignKey, Model, PrimaryKey, Table } from "sequelize-typescript";
 import OrderModel from "./order.model";
 import InvoiceModel from "../../invoice/repository/invoice.model";
 
 @Table({
-    tableName: 'products',
+    tableName: 'products_order',
     timestamps: false
 })
 export default class ProductOrder extends Model{
@@ -39,8 +38,5 @@ export default class ProductOrder extends Model{
 
     @ForeignKey(() => OrderModel)
     declare order_id: string;
-
-    // @BelongsTo(() => OrderModel)
-    // declare order: OrderModel;
 
 }

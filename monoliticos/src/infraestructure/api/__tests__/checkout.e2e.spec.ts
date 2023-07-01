@@ -8,9 +8,9 @@ describe('E2E test for checkout', () => {
         sequelize.connectionManager.initPools();
     });
 
-    // afterAll(async () => {
-    //     await sequelize.close();
-    // });
+    afterAll(async () => {
+        await sequelize.close();
+    });
 
     it('should create a checkout', async () => {
         const client = await request(app)

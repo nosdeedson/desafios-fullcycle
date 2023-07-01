@@ -16,25 +16,29 @@ export default class OrderRepository implements CheckoutGateway{
                 id: p.id.id,
                 name: p.name,
                 salesPrice: p.salesPrice,
-                order_id: order.id.id
             }
         })
-
-        await OrderModel.create({
-             id: order.id.id,
-             client: {
-                id: order.client.id.id,
-                name: order.client.name,
-                document: order.client.document,
-                email: order.client.email
-             },
-             products: products
-        }, 
-        {
-            include: [ {model: ClientOrder}, {model: ProductOrder}]
-        });
+        try {
+            await OrderModel.create({
+                id: order.id.id,
+                client: {
+                   id: order.client.id.id,
+                   name: order.client.name,
+                   document: order.client.document,
+                   email: order.client.email
+                },
+                products: products
+           }, 
+           {
+               include: [ ClientOrder, ProductOrder ]
+           });
+        } catch (error) {
+            console.log(error);
+            throw error
+        }
+        
         const result = await OrderModel.findOne(
-            {where: {id: order.id.id}, include: ['client', 'products']});
+            {where: {id: order.id.id}, include: [{model: ClientOrder}, {model: ProductOrder}]});
         const orderBD = result.dataValues
         const clientBD = orderBD.client.dataValues;
         const productsBD = orderBD.products
