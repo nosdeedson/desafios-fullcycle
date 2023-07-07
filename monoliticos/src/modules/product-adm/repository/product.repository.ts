@@ -19,6 +19,7 @@ export default class ProductRepository implements ProductGateway{
             });
             
         } catch (error) {
+            console.log(error)
             throw error
         }
     }

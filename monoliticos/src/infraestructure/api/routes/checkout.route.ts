@@ -6,25 +6,14 @@ import StoreCatalogFacadeFactory from '../../../modules/storage-catalog/factory/
 import { InvoiceFacadeFactory } from '../../../modules/invoice/factory/invoice-facade.factory';
 import PaymentFacadeFactory from '../../../modules/payment/factory/payment-facade.factory';
 import OrderRepository from '../../../modules/checkout/repository/order.repository';
+import CheckoutFacadeFactory from '../../../modules/checkout/factory/checkout.facade.factory';
 
 export const checkoutRoute = express.Router();
 
 
 checkoutRoute.post('/',async (req: Request, res: Response) => {
     try {
-        const clientFacade = ClientAdmFacadeFactory.create();
-        const productFacade = ProductAdmFacadeFactory.create();
-        const storeFacade = StoreCatalogFacadeFactory.create();
-        const checkoutRepository = new OrderRepository();
-        const invoice = InvoiceFacadeFactory.create();
-        const payment = PaymentFacadeFactory.create();
-        const usecase = new PlaceOrderUseCase(
-            clientFacade, 
-            productFacade, 
-            storeFacade, 
-            checkoutRepository,
-            invoice,
-            payment);
+        const usecase = CheckoutFacadeFactory.create();
         const products = req.body.products.map((p: { productId: any; }) => { return {productId: p.productId}})
         const input = {clientId: req.body.clientId, products: products};
         const output = await usecase.execute(input);

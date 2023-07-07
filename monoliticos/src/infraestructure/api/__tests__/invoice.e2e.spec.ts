@@ -8,9 +8,9 @@ describe('E2E test for invoice', () => {
         sequelize.connectionManager.initPools();
     });
 
-    // afterAll(async () => {
-    //     await sequelize.close();
-    // });
+    afterAll(async () => {
+        await sequelize.close();
+    });
 
     it('should find an invoice', async () => {
         const client = await request(app)
@@ -52,7 +52,6 @@ describe('E2E test for invoice', () => {
         const response = await request(app)
             .get(`/invoice/${checkout.body.invoiceId}`)
             .send();
-        
         expect(response.body.id).toBeDefined();
         expect(response.body.name).toBe('jose')
         expect(response.body.items.length).toBe(1)

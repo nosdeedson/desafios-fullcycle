@@ -14,7 +14,7 @@ describe("storage catalog test unit", () =>{
             sync:{force: true}
         });
 
-        await sequelize.addModels([ProducStorageCatalogtModel]);
+        await sequelize.addModels([ProducStorageCatalogtModel, ]);
         await sequelize.sync();
     })
 
