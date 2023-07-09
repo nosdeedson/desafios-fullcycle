@@ -54,7 +54,7 @@ func (c *Client) Update(name string, email string) error {
 }
 
 func (c *Client) AddAccount(a *Account) error {
-	if a.client.ID != c.ID {
+	if a.Client.ID != c.ID {
 		return errors.New("client don't have this account")
 	}
 	c.Accounts = append(c.Accounts, a)

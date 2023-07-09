@@ -23,7 +23,7 @@ func NewAccount(client *Client) *Account {
 	account := &Account{
 		ID:        uuid.New().String(),
 		Client:    client,
-		ClientId:  client.ID,
+		ClientID:  client.ID,
 		Balance:   0,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
@@ -33,7 +33,7 @@ func NewAccount(client *Client) *Account {
 }
 
 func (a *Account) Credit(amount float64) {
-	a.Balance = amount
+	a.Balance += amount
 	a.UpdatedAt = time.Now()
 }
 
