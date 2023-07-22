@@ -39,14 +39,14 @@ func (t *TransactionDB) FindByID(id string) (*entity.Transaction, error) {
 	return transaction, nil
 }
 
-func (t *TransactionDB) save(transaction *entity.Transaction) error {
-	smtp, err := t.DB.Prepare("INSERT INTO transactions (id, account_from_id, account_to_id, amount, created_at) VALUES(?,?,?,?)")
+func (t *TransactionDB) Create(transaction *entity.Transaction) error {
+	smtp, err := t.DB.Prepare("INSERT INTO transactions (id, account_from_id, account_to_id, amount, created_at) VALUES(?,?,?,?,?)")
 	if err != nil {
 		return err
 	}
 	defer smtp.Close()
 
-	_, err = smtp.Exec(transaction.ID, transaction.AccountFromId, transaction.AccountToId, transaction.CreatedAt)
+	_, err = smtp.Exec(transaction.ID, transaction.AccountFromId, transaction.AccountToId, transaction.Amount, transaction.CreatedAt)
 	if err != nil {
 		return err
 	}

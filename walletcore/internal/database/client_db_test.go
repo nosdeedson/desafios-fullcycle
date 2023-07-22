@@ -38,15 +38,15 @@ func (c *ClientDBTestSuite) TestSave() {
 		Email: "j@j",
 	}
 
-	err := c.clientDB.save(client)
+	err := c.clientDB.Save(client)
 	c.Nil(err)
 }
 
 func (c *ClientDBTestSuite) TestFindByID() {
 	client, _ := entity.NewClient("jose", "j@j")
-	c.clientDB.save(client)
+	c.clientDB.Save(client)
 
-	clientDB, err := c.clientDB.FindByID(client.ID)
+	clientDB, err := c.clientDB.FindById(client.ID)
 	c.Nil(err)
 	c.NotNil(clientDB)
 	c.Equal(client.ID, clientDB.ID)

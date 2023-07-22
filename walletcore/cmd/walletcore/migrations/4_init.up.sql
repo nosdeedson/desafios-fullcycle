@@ -1,0 +1,1 @@
+insert into clients (id, name, email,created_at, updated_at ) value ('dd8f2604-76ae-4553-ab23-7745d2a27ffc', 'jose', 'j@j', now(), now()); 

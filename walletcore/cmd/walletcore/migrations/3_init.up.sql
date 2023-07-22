@@ -1,0 +1,1 @@
+Create table transactions (id varchar(255), account_from_id varchar(255), account_to_id varchar(255), amount float, created_at date);

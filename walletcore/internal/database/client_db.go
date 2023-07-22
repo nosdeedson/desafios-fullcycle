@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/entity"
 )
@@ -16,7 +17,7 @@ func NewClientDB(db *sql.DB) *ClientDB {
 	}
 }
 
-func (c *ClientDB) FindByID(id string) (*entity.Client, error) {
+func (c *ClientDB) FindById(id string) (*entity.Client, error) {
 	client := &entity.Client{}
 	stmt, err := c.DB.Prepare("SELECT id, name, email, created_at FROM clients WHERE id= ?")
 	if err != nil {
@@ -25,25 +26,24 @@ func (c *ClientDB) FindByID(id string) (*entity.Client, error) {
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-
 	err = row.Scan(
 		&client.ID,
 		&client.Name,
 		&client.Email,
 		&client.CreatedAt,
 	)
+	fmt.Println(client)
 	if err != nil {
 		return nil, err
 	}
 	return client, nil
 }
 
-func (c *ClientDB) save(client *entity.Client) error {
+func (c *ClientDB) Save(client *entity.Client) error {
 	smtp, err := c.DB.Prepare("INSERT INTO clients (id, name, email, created_at) VALUES(?,?,?,?)")
 	if err != nil {
 		return err
 	}
-
 	defer smtp.Close()
 
 	_, err = smtp.Exec(client.ID, client.Name, client.Email, client.CreatedAt)

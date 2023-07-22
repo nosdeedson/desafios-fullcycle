@@ -1,1 +1,3 @@
 # command: to install dependencies "go mod tidy"
+
+## command to run the tests: go test ./... 
