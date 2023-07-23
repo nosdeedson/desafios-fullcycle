@@ -20,7 +20,6 @@ func NewUpdatedBalanceKafkaHandler(kafka *kafka.Producer) *UpdatedBalanceKafkaHa
 
 func (h *UpdatedBalanceKafkaHandler) Handle(message events.EventInterface, wg *sync.WaitGroup) {
 	defer wg.Done()
-	fmt.Println("kafka handler")
 	h.Kafka.Publish(message, nil, "balances")
-	fmt.Println("UpdatedBalanceKafkaHandler called")
+	fmt.Println(" UpdatedBalanceKafkaHandler called")
 }

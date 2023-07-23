@@ -21,5 +21,5 @@ func NewTransactionCreatedKafkaHandler(kafka *kafka.Producer) *TransactionCreate
 func (handler *TransactionCreatedKafkaHandler) Handle(message events.EventInterface, wg *sync.WaitGroup) {
 	defer wg.Done()
 	handler.Kafka.Publish(message, nil, "transactions")
-	fmt.Printf("TransactionCreatedKafkaHandler called")
+	fmt.Printf(" TransactionCreatedKafkaHandler called")
 }

@@ -2,7 +2,6 @@ package createtransaction
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/entity"
 	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/gateway"
@@ -62,12 +61,10 @@ func (uc *CreateTransactionUseCase) Execute(ctx context.Context, input CreateTra
 		if err != nil {
 			return err
 		}
-		fmt.Println(accountFrom)
 		accountTo, err := accountRepository.FindById(input.AccountIDTo)
 		if err != nil {
 			return err
 		}
-		fmt.Println(accountTo)
 		transaction, err := entity.NewTransaction(accountFrom, accountTo, input.Amount)
 		if err != nil {
 			return err
@@ -85,8 +82,6 @@ func (uc *CreateTransactionUseCase) Execute(ctx context.Context, input CreateTra
 
 		err = transactionRepository.Create(transaction)
 		if err != nil {
-			fmt.Println("failed to create transaction")
-			fmt.Println(err)
 			return err
 		}
 		output.ID = transaction.ID

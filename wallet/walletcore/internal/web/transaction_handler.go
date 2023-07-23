@@ -2,7 +2,6 @@ package web
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	createtransaction "github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/usecase/create_transaction"
@@ -26,7 +25,6 @@ func (h *WebTransactionHandler) CreateTransaction(w http.ResponseWriter, r *http
 		return
 	}
 	ctx := r.Context()
-	fmt.Println(err)
 	output, err := h.CreateTransactionUseCase.Execute(ctx, dto)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

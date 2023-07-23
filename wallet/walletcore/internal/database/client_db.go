@@ -2,7 +2,6 @@ package database
 
 import (
 	"database/sql"
-	"fmt"
 
 	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/entity"
 )
@@ -32,7 +31,6 @@ func (c *ClientDB) FindById(id string) (*entity.Client, error) {
 		&client.Email,
 		&client.CreatedAt,
 	)
-	fmt.Println(client)
 	if err != nil {
 		return nil, err
 	}

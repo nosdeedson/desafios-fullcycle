@@ -46,7 +46,7 @@ func (t *TransactionDB) Create(transaction *entity.Transaction) error {
 	}
 	defer smtp.Close()
 
-	_, err = smtp.Exec(transaction.ID, transaction.AccountFromId, transaction.AccountToId, transaction.Amount, transaction.CreatedAt)
+	_, err = smtp.Exec(transaction.ID, transaction.AccountFrom.ID, transaction.AccountTo.ID, transaction.Amount, transaction.CreatedAt)
 	if err != nil {
 		return err
 	}

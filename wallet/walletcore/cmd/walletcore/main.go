@@ -26,8 +26,7 @@ import (
 )
 
 func main() {
-	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/wallet?charset=utf8&parseTime=True&loc=Local")
-	fmt.Println(err)
+	db, err := sql.Open("mysql", "root:root@tcp(mysql:3306)/wallet?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {
 		panic(err)
 	}
@@ -41,7 +40,6 @@ func main() {
 		"mysql",
 		driver,
 	)
-	fmt.Println(err)
 
 	m.Up()
 
