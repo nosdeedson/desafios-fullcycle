@@ -2,11 +2,12 @@ package createtransaction
 
 import (
 	"context"
+	"fmt"
 
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/entity"
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/gateway"
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/pkg/events"
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/pkg/uow"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/entity"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/gateway"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/pkg/events"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/pkg/uow"
 )
 
 type CreateTransactionInputDTO struct {
@@ -54,11 +55,13 @@ func (uc *CreateTransactionUseCase) Execute(ctx context.Context, input CreateTra
 	output := &CreateTransactionOutputDTO{}
 	balanceUpdatedOutput := &BalanceUpdatedOutputDTO{}
 	err := uc.Uow.Do(ctx, func(_ *uow.Uow) error {
+
 		accountRepository := uc.getAccountRepository(ctx)
 		transactionRepository := uc.getTransactionRepository(ctx)
 
 		accountFrom, err := accountRepository.FindById(input.AccountIDFrom)
 		if err != nil {
+			fmt.Println("ERROR FINDING FROM")
 			return err
 		}
 		accountTo, err := accountRepository.FindById(input.AccountIDTo)
@@ -79,7 +82,8 @@ func (uc *CreateTransactionUseCase) Execute(ctx context.Context, input CreateTra
 		if err != nil {
 			return err
 		}
-
+		fmt.Println("SAVING TRANSACTIONS")
+		fmt.Println(transaction)
 		err = transactionRepository.Create(transaction)
 		if err != nil {
 			return err

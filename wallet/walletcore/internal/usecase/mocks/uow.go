@@ -3,7 +3,7 @@ package mocks
 import (
 	"context"
 
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/pkg/uow"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/pkg/uow"
 	"github.com/stretchr/testify/mock"
 )
 

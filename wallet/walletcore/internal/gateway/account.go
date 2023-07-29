@@ -1,6 +1,6 @@
 package gateway
 
-import "github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/entity"
+import "github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/entity"
 
 type AccountGateway interface {
 	Save(account *entity.Account) error

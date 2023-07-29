@@ -1,8 +1,8 @@
 package create_account
 
 import (
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/entity"
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/gateway"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/entity"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/gateway"
 )
 
 type CreateAccountInputDTO struct {

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	createtransaction "github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/usecase/create_transaction"
+	createtransaction "github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/usecase/create_transaction"
 )
 
 type WebTransactionHandler struct {

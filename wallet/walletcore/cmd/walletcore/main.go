@@ -6,23 +6,22 @@ import (
 	"fmt"
 
 	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/database"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/event"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/event/handler"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/usecase/create_account"
+	createclient "github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/usecase/create_client"
+	createtransaction "github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/usecase/create_transaction"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/web"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/web/webserver"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/pkg/events"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/pkg/kafka"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/pkg/uow"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/mysql"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
-
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/database"
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/event"
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/event/handler"
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/usecase/create_account"
-	createclient "github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/usecase/create_client"
-	createtransaction "github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/usecase/create_transaction"
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/web"
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/web/webserver"
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/pkg/events"
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/pkg/kafka"
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/pkg/uow"
 )
 
 func main() {

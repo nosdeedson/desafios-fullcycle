@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"testing"
 
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/entity"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/entity"
 	"github.com/stretchr/testify/suite"
 )
 

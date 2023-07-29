@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/entity"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/entity"
 	"github.com/stretchr/testify/suite"
 )
 

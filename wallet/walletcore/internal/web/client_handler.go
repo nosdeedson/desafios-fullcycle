@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	createclient "github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/usecase/create_client"
+	createclient "github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/usecase/create_client"
 )
 
 type WebClientHandler struct {

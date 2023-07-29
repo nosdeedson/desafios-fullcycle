@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/pkg/events"
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/pkg/kafka"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/pkg/events"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/pkg/kafka"
 )
 
 type UpdatedBalanceKafkaHandler struct {

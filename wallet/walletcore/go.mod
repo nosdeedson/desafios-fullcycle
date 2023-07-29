@@ -1,4 +1,4 @@
-module github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore
+module github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore
 
 go 1.19
 

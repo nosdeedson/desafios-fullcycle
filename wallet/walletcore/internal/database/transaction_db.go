@@ -3,7 +3,7 @@ package database
 import (
 	"database/sql"
 
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/entity"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/entity"
 )
 
 type TransactionDB struct {

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/nosdeedson/desafios-fullcycle/tree/main/walletcore/internal/usecase/create_account"
+	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/walletcore/internal/usecase/create_account"
 )
 
 type WebAccountHanlder struct {
