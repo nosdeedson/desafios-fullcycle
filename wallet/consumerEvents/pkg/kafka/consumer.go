@@ -61,7 +61,7 @@ func (c *ConsumerTransactionsKafka) Consume() (*ResultTransaction, error) {
 	run := true
 	fmt.Println("runing")
 
-	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/wallet?charset=utf8&parseTime=True&loc=Local")
+	db, err := sql.Open("mysql", "root:root@tcp(mysql:3306)/wallet?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {
 		panic(err)
 	}
@@ -86,13 +86,16 @@ func (c *ConsumerTransactionsKafka) Consume() (*ResultTransaction, error) {
 			}
 			fmt.Println(message)
 			accountDB := database.NewAccountDB(db)
-			clientDB := database.NewClientDB(db)
 			transactionDB := database.NewTransactionDB(db)
 
 			accountFrom, err := accountDB.FindById(message.Payload.AccountIdFrom)
+			if err != nil {
+				fmt.Println(err)
+			}
 			accountTo, err := accountDB.FindById(message.Payload.AccountIdTo)
-			clientFrom, err := clientDB.FindById(accountFrom.ClientID)
-			clientTo, err := clientDB.FindById(accountTo.ClientID)
+			if err != nil {
+				fmt.Println(err)
+			}
 
 			transaction, err := transactionDB.FindById(message.Payload.ID)
 			fmt.Println(transaction)
@@ -100,13 +103,20 @@ func (c *ConsumerTransactionsKafka) Consume() (*ResultTransaction, error) {
 				panic(err)
 			}
 
-			statement, err := entity.NewStatement("1", clientFrom.Name, clientTo.Name, transaction.Amount)
+			statement, err := entity.NewStatement(transaction.ID, accountFrom.Client.Name, accountTo.Client.Name, transaction.Amount)
+			if err != nil {
+				fmt.Println(err)
+			}
 			fmt.Println(statement)
-			//statementDB := database.NewStatementDB(db)
-			//err = statementDB.Save(statement)
+			statementDB := database.NewStatementDB(db)
+			err = statementDB.Save(statement)
+			if err != nil {
+				fmt.Println("FAILED TO SAVE STATEMENT")
+				fmt.Println(err)
+			}
 		}
 	}
-	fmt.Printf("response: %s", response)
+	fmt.Println(response)
 	return response, nil
 }
 

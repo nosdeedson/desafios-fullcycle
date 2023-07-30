@@ -2,7 +2,9 @@ package web
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"strings"
 
 	getstatement "github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/consumerEvents/internal/usecase/get_statement"
 )
@@ -18,14 +20,18 @@ func NewWebStatementHandler(getStatement getstatement.GetStatementUseCase) *WebS
 }
 
 func (h *WebStatementHandler) GetStatement(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.Query().Get("id")
-	out, err := h.GetStatementUseCase.Execute(id)
+
+	partsUrl := strings.Split(r.URL.Path, "/")
+	id := partsUrl[len(partsUrl)-1]
+	output, err := h.GetStatementUseCase.Execute(id)
+	fmt.Println(output)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	w.Header().Set("Content-Type", "text/html")
-	err = json.NewEncoder(w).Encode(out)
+	w.Header().Set("Content-Type", "application/json")
+
+	err = json.NewEncoder(w).Encode(output)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return

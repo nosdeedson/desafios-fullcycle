@@ -2,13 +2,17 @@ package getstatement
 
 import (
 	"fmt"
-	"strings"
+	"time"
 
 	"github.com/nosdeedson/desafios-fullcycle/tree/main/wallet/consumerEvents/internal/gateway"
 )
 
 type GetStatementUseCaseOutPut struct {
-	statement string
+	ID         string
+	NameCredit string
+	NameDebit  string
+	Amount     float64
+	CreatedAt  time.Time
 }
 
 type GetStatementUseCase struct {
@@ -22,15 +26,17 @@ func NewGetStatementUseCase(statementGateway gateway.StatementGateway) *GetState
 }
 
 func (statement *GetStatementUseCase) Execute(id string) (*GetStatementUseCaseOutPut, error) {
+	fmt.Println(id)
 	t, err := statement.statementGateway.FindById(id)
+	output := &GetStatementUseCaseOutPut{}
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
-	asString := fmt.Sprintf("%v", t.Amount)
-	value := []string{"O cliente", t.NameCredit, "enviou", asString, "para", t.NameDebit}
-	text := strings.Join(value, " ")
-	output := &GetStatementUseCaseOutPut{
-		statement: text,
-	}
+	output.Amount = t.Amount
+	output.CreatedAt = t.CreatedAt
+	output.ID = t.ID
+	output.NameCredit = t.NameCredit
+	output.NameDebit = t.NameDebit
 	return output, nil
 }

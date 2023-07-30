@@ -11,12 +11,14 @@ type StatementDB struct {
 }
 
 func NewStatementDB(db *sql.DB) *StatementDB {
-	return nil
+	return &StatementDB{
+		DB: db,
+	}
 }
 
 func (s *StatementDB) FindById(id string) (*entity.Statement, error) {
 	statement := &entity.Statement{}
-	stmt, err := s.DB.Prepare("select id, name_credit, name_debit, amount from statements where id= ?")
+	stmt, err := s.DB.Prepare("select id, name_credit, name_debit, amount, created_at from statements where id= ?")
 	if err != nil {
 		return nil, err
 	}
@@ -27,6 +29,7 @@ func (s *StatementDB) FindById(id string) (*entity.Statement, error) {
 		&statement.NameCredit,
 		&statement.NameDebit,
 		&statement.Amount,
+		&statement.CreatedAt,
 	)
 	if err != nil {
 		return nil, err

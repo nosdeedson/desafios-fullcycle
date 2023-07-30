@@ -17,21 +17,13 @@ import (
 
 func main() {
 
-	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/wallet?charset=utf8&parseTime=True&loc=Local")
-	// driver, err := mysql.WithInstance(db, &mysql.Config{})
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// m, err := migrate.NewWithDatabaseInstance(
-	// 	"file://migrations",
-	// 	"mysql",
-	// 	driver,
-	// )
-
-	// m.Up()
+	db, err := sql.Open("mysql", "root:root@tcp(mysql:3306)/wallet?charset=utf8&parseTime=True&loc=Local")
+	if err != nil {
+		panic(err)
+	}
 
 	configMap := ckafka.ConfigMap{
-		"bootstrap.servers": "localhost:9092",
+		"bootstrap.servers": "kafka:29092",
 		"group.id":          "wallet",
 	}
 	configMap["auto.offset.reset"] = "earliest"
@@ -42,7 +34,7 @@ func main() {
 
 	webserver := webserverconsumer.NewWebServer(":8081")
 	statementHandler := web.NewWebStatementHandler(*getStatementUseCase)
-	webserver.AddHandler("/statements", statementHandler.GetStatement)
+	webserver.AddHandler("/statements/{id}", statementHandler.GetStatement)
 	go webserver.Start()
 	fmt.Println("server is runnig")
 
