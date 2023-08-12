@@ -1,0 +1,29 @@
+podemos gerenciar o kafka por linha de comando
+para criar um topic: kafka-topics --create --topic=nameoftopic --bootstrat-server=localhost:9092 --partitions=3
+
+bootstrat-server é obrigatório, indica onde o tópico vai ser criado
+
+kafka-topics --create --topic=teste --bootstrap-server=localhost:9092 --partitions=3
+
+listanto topics
+kafka-topics --list --bootstrap-server=localhost:9092
+
+descrevendo um topic
+kafka-topics --bootstrap-server=localhost:9092 --topic=nameoftopic --describe
+
+## ver comandos do consumer
+kafka-console-consumer (aperte enter)
+
+## criar um consumer dentro do kafka
+kafka-console-consumer --bootstrap-server=localhost:9092 --topic=nameoftopic 
+kafka-console-consumer --bootstrap-server=localhost:9092 --topic=nameoftopic --from-beginning (ler todos as mensagens novamente, até as já lidas)
+
+consumer com grupo
+kafka-console-consumer --bootstrap-server=localhost:9092 --topic=nameoftopic --group=nameofgroup
+
+
+## criar um producer dentro do kafka
+kafka-console-producer --bootstrap-server=localhost:9092 --topic=nameoftopic
+
+descrevendo grupos
+kafka-consumer-groups --bootstrap-server=localhost:9092 --group=x --describe
