@@ -1,5 +1,5 @@
 podemos gerenciar o kafka por linha de comando
-para criar um topic: kafka-topics --create --topic=nameoftopic --bootstrat-server=localhost:9092 --partitions=3
+para criar um topic: kafka-topics --create --topic=nameoftopic --bootstrap-server=localhost:9092 --partitions=3
 
 bootstrat-server é obrigatório, indica onde o tópico vai ser criado
 
