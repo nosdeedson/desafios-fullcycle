@@ -34,10 +34,10 @@ app.get('/login', (req, res) => {
 
     //@ts-expect-error - type mismatch
     req.session.nonce = nonce;
-
     //@ts-expect-error - type mismatch
     req.session.state = state;
     req.session.save();
+
     const loginParams = new URLSearchParams({
         client_id: "fullcycle-client",
         redirect_uri: "http://localhost:3000/callback",
@@ -61,7 +61,7 @@ app.get('/logout', (req, res)=>{
     });
 
     req.session.destroy((err) =>{
-        console.log(err)
+        console.error(err)
     });
 
     const url = `http://localhost:8080/realms/fullcycle-realm/protocol/openid-connect/logout?${logoutParams.toString()}`;
